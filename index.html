@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Space Invaders Game - Classic Arcade Game Online | Play Free</title>
+    <meta name="description" content="Play the classic Space Invaders arcade game online for free. Defend Earth from alien invasion in this retro-style shooter game. Mobile-friendly and responsive design.">
+    <meta name="keywords" content="space invaders, arcade game, retro game, shooter game, online game, free game, classic game, alien invasion">
+    <meta name="author" content="Space Invaders Game">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Space Invaders Game - Classic Arcade Game Online">
+    <meta property="og:description" content="Play the classic Space Invaders arcade game online for free. Defend Earth from alien invasion in this retro-style shooter game.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:image" content="https://yourwebsite.com/space-invaders-preview.jpg">
+    <meta property="og:site_name" content="Space Invaders Game">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Space Invaders Game - Classic Arcade Game Online">
+    <meta name="twitter:description" content="Play the classic Space Invaders arcade game online for free. Defend Earth from alien invasion.">
+    <meta name="twitter:image" content="https://yourwebsite.com/space-invaders-preview.jpg">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Space Invaders">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Game",
+        "name": "Space Invaders",
+        "description": "Classic arcade space shooter game where players defend Earth from alien invasion",
+        "genre": "Arcade",
+        "gamePlatform": "Web Browser",
+        "operatingSystem": "Any",
+        "applicationCategory": "Game"
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-rocket"></i> Space Invaders</h1>
+            <nav class="nav">
+                <button id="playBtn" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Play
+                </button>
+                <button id="pauseBtn" class="btn btn-secondary">
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+                <button id="resetBtn" class="btn btn-danger">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Google Ad Placeholder - Top Banner -->
+    <div class="ad-container ad-top">
+        <div class="ad-placeholder">
+            <p><i class="fas fa-ad"></i> Advertisement</p>
+            <!-- Google AdSense code goes here -->
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="game-wrapper">
+                <!-- Left Sidebar Ad -->
+                <aside class="sidebar-left">
+                    <div class="ad-container ad-sidebar">
+                        <div class="ad-placeholder">
+                            <p><i class="fas fa-ad"></i> Ad</p>
+                            <!-- Google AdSense code goes here -->
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Game Area -->
+                <section class="game-section">
+                    <div class="game-info">
+                        <div class="score-board">
+                            <div class="score-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>Score: <span id="score">0</span></span>
+                            </div>
+                            <div class="score-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Lives: <span id="lives">3</span></span>
+                            </div>
+                            <div class="score-item">
+                                <i class="fas fa-layer-group"></i>
+                                <span>Level: <span id="level">1</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-container">
+                        <canvas id="gameCanvas"></canvas>
+                        <div id="gameOverScreen" class="game-over-screen">
+                            <div class="game-over-content">
+                                <h2><i class="fas fa-skull"></i> Game Over</h2>
+                                <p>Final Score: <span id="finalScore">0</span></p>
+                                <button id="restartBtn" class="btn btn-primary">
+                                    <i class="fas fa-play"></i> Play Again
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Controls -->
+                    <div class="mobile-controls">
+                        <div class="control-row">
+                            <button id="leftBtn" class="control-btn">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <button id="shootBtn" class="control-btn shoot-btn">
+                                <i class="fas fa-crosshairs"></i>
+                            </button>
+                            <button id="rightBtn" class="control-btn">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Right Sidebar Ad -->
+                <aside class="sidebar-right">
+                    <div class="ad-container ad-sidebar">
+                        <div class="ad-placeholder">
+                            <p><i class="fas fa-ad"></i> Ad</p>
+                            <!-- Google AdSense code goes here -->
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Instructions -->
+            <section class="instructions">
+                <h2><i class="fas fa-gamepad"></i> How to Play</h2>
+                <div class="instruction-grid">
+                    <div class="instruction-item">
+                        <i class="fas fa-keyboard"></i>
+                        <h3>Desktop Controls</h3>
+                        <p>Use arrow keys to move left/right and spacebar to shoot</p>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Controls</h3>
+                        <p>Use the on-screen buttons to move and shoot</p>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-target"></i>
+                        <h3>Objective</h3>
+                        <p>Destroy all aliens before they reach Earth!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Google Ad Placeholder - Bottom Banner -->
+    <div class="ad-container ad-bottom">
+        <div class="ad-placeholder">
+            <p><i class="fas fa-ad"></i> Advertisement</p>
+            <!-- Google AdSense code goes here -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Space Invaders Game. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
