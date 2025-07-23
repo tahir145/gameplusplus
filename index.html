@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders | Classic Arcade Game</title>
     <meta name="description" content="Play the classic Space Invaders arcade game online. Defend Earth against alien invaders in this retro-styled browser game.">
@@ -115,23 +115,6 @@
             border: none !important;
             border-radius: 0 !important;
             margin: 0 !important;
-            touch-action: none !important;
-        }
-        
-        @media (orientation: portrait) {
-            .fullscreen-canvas {
-                /* Adjust for portrait orientation */
-                width: 100vw !important;
-                height: 100vh !important;
-            }
-        }
-        
-        @media (orientation: landscape) {
-            .fullscreen-canvas {
-                /* Adjust for landscape orientation */
-                width: 100vw !important;
-                height: 100vh !important;
-            }
         }
 
         /* Game Stats */
@@ -193,43 +176,6 @@
             padding: 5px 10px;
             cursor: pointer;
             z-index: 100;
-        }
-
-        /* Fullscreen exit button */
-        #fullscreenExitBtn {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 10000;
-            background: rgba(78, 204, 163, 0.7);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        /* Mobile Controls */
-        .mobile-controls {
-            display: none;
-            width: 100%;
-            max-width: 600px;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        .mobile-controls button {
-            padding: 15px 25px;
-            font-size: 1.5rem;
-        }
-
-        #fireBtn {
-            background-color: #e74c3c;
-        }
-
-        #fireBtn:hover {
-            background-color: #c0392b;
         }
 
         /* Power-ups */
@@ -378,16 +324,6 @@
             font-size: 1.2rem;
         }
 
-        .modal input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #4ecca3;
-            background-color: #0a0e17;
-            color: #e0e0e0;
-            border-radius: 5px;
-        }
-
         .modal button {
             margin: 5px;
             padding: 10px 20px;
@@ -420,33 +356,6 @@
             margin-top: 20px;
         }
 
-        /* Wave transition */
-        #waveTransition {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 14, 23, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 40;
-        }
-
-        #waveTransition h3 {
-            font-size: 2rem;
-            color: #4ecca3;
-            text-shadow: 0 0 10px rgba(78, 204, 163, 0.7);
-        }
-
-        /* Special effects */
-        .special-effect {
-            position: absolute;
-            pointer-events: none;
-            z-index: 30;
-        }
-
         /* Difficulty selector */
         .difficulty-selector {
             display: flex;
@@ -473,6 +382,13 @@
             100% { transform: translateY(0); }
         }
 
+        /* Special effects */
+        .special-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 30;
+        }
+
         /* Fullscreen styles */
         .fullscreen-container {
             position: fixed;
@@ -494,22 +410,6 @@
             left: 50%;
             transform: translateX(-50%);
             background-color: rgba(26, 38, 57, 0.7);
-            z-index: 10000;
-        }
-
-        .fullscreen-container .game-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10000;
-        }
-
-        .fullscreen-container .mobile-controls {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
             z-index: 10000;
         }
 
@@ -564,14 +464,6 @@
                 gap: 5px;
             }
             
-            .mobile-controls {
-                display: flex;
-            }
-            
-            .controls-info {
-                display: none;
-            }
-            
             #gameCanvas {
                 height: 350px;
             }
@@ -622,7 +514,7 @@
             <h1><i class="fas fa-rocket"></i> Space Invaders</h1>
             <div class="controls-info">
                 <p><i class="fas fa-keyboard"></i> Use arrow keys or A/D to move, Space to shoot</p>
-                <p><i class="fas fa-mobile-alt"></i> On mobile: Touch and swipe to move, touch to shoot</p>
+                <p><i class="fas fa-warning"></i>  This game only works on computers. Anyone with a desktop or laptop can play comfortably and enjoy their time.</p>
             </div>
         </header>
         
@@ -636,7 +528,7 @@
             
             <!-- Game Canvas -->
             <div class="game-wrapper">
-                <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+                
                 <div class="game-stats">
                     <div class="score">Score: <span id="score">0</span></div>
                     <div class="lives">Lives: <span id="lives">3</span></div>
@@ -647,14 +539,9 @@
                     <i class="fas fa-bolt"></i> <span id="powerUpType">Power-up</span>: <span id="powerUpTimer">10</span>s
                 </div>
                 <div class="game-controls">
-                    <button id="startBtn"><i class="fas fa-play"></i> Start Game</button>
+                    <button class="fullscreenBtn" id="startBtn"><i class="fas fa-play"></i> Start Game</button>
                     <button id="pauseBtn"><i class="fas fa-pause"></i> Pause</button>
                     <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
-                </div>
-                <div class="mobile-controls">
-                    <button id="leftBtn"><i class="fas fa-arrow-left"></i></button>
-                    <button id="fireBtn"><i class="fas fa-meteor"></i></button>
-                    <button id="rightBtn"><i class="fas fa-arrow-right"></i></button>
                 </div>
                 
                 <!-- Start Screen -->
@@ -666,12 +553,7 @@
                         <button class="difficulty-btn" data-difficulty="medium">Medium</button>
                         <button class="difficulty-btn" data-difficulty="hard">Hard</button>
                     </div>
-                    <button id="startGameBtn"><i class="fas fa-play"></i> Start Game</button>
-                </div>
-                
-                <!-- Wave Transition -->
-                <div id="waveTransition">
-                    <h3>Wave <span id="newWave">1</span></h3>
+                    <button class="fullscreenBtn" id="startGameBtn"><i class="fas fa-play"></i> Start Game</button>
                 </div>
             </div>
             
@@ -701,12 +583,6 @@
                     <li><i class="fas fa-pause"></i> P: Pause game</li>
                     <li><i class="fas fa-expand"></i> F: Toggle fullscreen</li>
                 </ul>
-                <p><strong>Mobile Controls:</strong></p>
-                <ul>
-                    <li><i class="fas fa-hand-pointer"></i> Touch and swipe to move</li>
-                    <li><i class="fas fa-hand-pointer"></i> Touch to fire automatically</li>
-                    <li><i class="fas fa-compress"></i> Tap exit button to leave fullscreen</li>
-                </ul>
                 <p><strong>Power-ups:</strong></p>
                 <ul>
                     <li><i class="fas fa-bolt"></i> Rapid Fire: Shoot faster</li>
@@ -724,15 +600,7 @@
             </div>
         </div>
         
-        
-        <!-- Footer Ad Space -->
-        <div class="ad-container ad-footer">
-            <div class="ad-placeholder">
-                <p><i class="fas fa-ad"></i> Advertisement</p>
-            </div>
-        </div>
-        
-       <footer>
+         <footer>
             <p>Developed by Tahir Mohammed. © <span id="year"></span> Space Invaders Game. All rights reserved.</p>
 
         <script>
@@ -751,7 +619,6 @@
         <div class="modal-content">
             <h2><i class="fas fa-skull-crossbones"></i> Game Over</h2>
             <p>Your score: <span id="finalScore">0</span></p>
-            <input type="text" id="playerName" placeholder="Enter your name">
             <button id="saveScoreBtn"><i class="fas fa-save"></i> Save Score</button>
             <button id="playAgainBtn"><i class="fas fa-redo"></i> Play Again</button>
         </div>
@@ -765,16 +632,12 @@
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const muteBtn = document.getElementById('muteBtn');
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-        const leftBtn = document.getElementById('leftBtn');
-        const rightBtn = document.getElementById('rightBtn');
-        const fireBtn = document.getElementById('fireBtn');
+        const fullscreenBtn = document.getElementsByClassName('fullscreenBtn');
         const scoreElement = document.getElementById('score');
         const livesElement = document.getElementById('lives');
         const waveElement = document.getElementById('wave');
         const gameOverModal = document.getElementById('gameOverModal');
         const finalScoreElement = document.getElementById('finalScore');
-        const playerNameInput = document.getElementById('playerName');
         const saveScoreBtn = document.getElementById('saveScoreBtn');
         const playAgainBtn = document.getElementById('playAgainBtn');
         const highScoresList = document.getElementById('highScoresList');
@@ -782,23 +645,13 @@
         const startScreen = document.getElementById('startScreen');
         const startGameBtn = document.getElementById('startGameBtn');
         const difficultyBtns = document.querySelectorAll('.difficulty-btn');
-        const waveTransition = document.getElementById('waveTransition');
-        const newWaveElement = document.getElementById('newWave');
         const powerUpIndicator = document.getElementById('powerUpIndicator');
         const powerUpType = document.getElementById('powerUpType');
         const powerUpTimer = document.getElementById('powerUpTimer');
-        const mobileControls = document.querySelector('.mobile-controls');
 
         // Set canvas dimensions
         canvas.width = 600;
         canvas.height = 400;
-
-        // Touch control variables
-        let touchActive = false;
-        let touchStartX = 0;
-        let touchCurrentX = 0;
-        let touchSensitivity = 1.5; // Adjust for faster/slower movement
-        let isTouchDevice = false;
 
         // Game state
         let game = {
@@ -817,7 +670,6 @@
             difficulty: 'easy',
             powerUps: [],
             enemyCount: 0,
-            waveDelay: 1000, // ms between waves
             difficultyMultiplier: 1.0
         };
 
@@ -909,7 +761,7 @@
             shoot: () => createOscillatorSound(880, 'square', 0.1, 0.1),
             explosion: () => createOscillatorSound(100, 'sawtooth', 0.3, 0.2),
             enemyShoot: () => createOscillatorSound(440, 'square', 0.1, 0.05),
-                       playerHit: () => {
+            playerHit: () => {
                 createOscillatorSound(200, 'sawtooth', 0.3, 0.3);
                 createOscillatorSound(150, 'sawtooth', 0.3, 0.3);
             },
@@ -936,128 +788,6 @@
                 setTimeout(() => createOscillatorSound(783.99, 'sine', 0.2, 0.2), 200);
             }
         };
-
-        // Detect if device supports touch
-        function detectTouchDevice() {
-            return (('ontouchstart' in window) ||
-                    (navigator.maxTouchPoints > 0) ||
-                    (navigator.msMaxTouchPoints > 0));
-        }
-
-        // Initialize touch controls
-        function initTouchControls() {
-            isTouchDevice = detectTouchDevice();
-            
-            // Add touch event listeners to canvas
-            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
-            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-            canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
-            canvas.addEventListener('touchcancel', handleTouchEnd, { passive: false });
-            
-            // Add fullscreen change listener to update controls visibility
-            document.addEventListener('fullscreenchange', updateTouchControlsVisibility);
-            document.addEventListener('webkitfullscreenchange', updateTouchControlsVisibility);
-            document.addEventListener('mozfullscreenchange', updateTouchControlsVisibility);
-            document.addEventListener('MSFullscreenChange', updateTouchControlsVisibility);
-            
-            // Initial update of controls visibility
-            updateTouchControlsVisibility();
-        }
-
-        // Handle touch start event
-        function handleTouchStart(e) {
-            e.preventDefault();
-            
-            // Only process if in fullscreen mode on touch device
-            if (!game.isFullscreen || !isTouchDevice) return;
-            
-            touchActive = true;
-            player.isFiring = true;
-            
-            // Store initial touch position
-            const touch = e.touches[0];
-            touchStartX = touch.clientX;
-            touchCurrentX = touchStartX;
-        }
-
-        // Handle touch move event
-        function handleTouchMove(e) {
-            e.preventDefault();
-            
-            // Only process if in fullscreen mode on touch device
-            if (!game.isFullscreen || !isTouchDevice || !touchActive) return;
-            
-            const touch = e.touches[0];
-            touchCurrentX = touch.clientX;
-            
-            // Calculate movement delta
-            const deltaX = (touchCurrentX - touchStartX) * touchSensitivity;
-            
-            // Move player based on swipe direction and distance
-            const newX = player.x + deltaX;
-            
-            // Keep player within canvas bounds
-            if (newX >= 0 && newX <= canvas.width - player.width) {
-                player.x = newX;
-            }
-            
-            // Update start position for next move
-            touchStartX = touchCurrentX;
-        }
-
-        // Handle touch end event
-        function handleTouchEnd(e) {
-            e.preventDefault();
-            
-            // Only process if in fullscreen mode on touch device
-            if (!game.isFullscreen || !isTouchDevice) return;
-            
-            touchActive = false;
-            player.isFiring = false;
-        }
-
-        // Update visibility of touch controls based on fullscreen state
-        function updateTouchControlsVisibility() {
-            if (game.isFullscreen && isTouchDevice) {
-                // Hide on-screen buttons in fullscreen touch mode
-                if (mobileControls) mobileControls.style.display = 'none';
-                
-                // Add fullscreen exit button
-                addFullscreenExitButton();
-            } else {
-                // Show on-screen buttons when not in fullscreen
-                if (mobileControls && window.innerWidth <= 768) {
-                    mobileControls.style.display = 'flex';
-                }
-                
-                // Remove fullscreen exit button if it exists
-                removeFullscreenExitButton();
-            }
-        }
-
-        // Add a floating fullscreen exit button
-        function addFullscreenExitButton() {
-            // Remove any existing button first
-            removeFullscreenExitButton();
-            
-            const exitBtn = document.createElement('button');
-            exitBtn.id = 'fullscreenExitBtn';
-            exitBtn.innerHTML = '<i class="fas fa-compress"></i>';
-            
-            // Add click event to exit fullscreen
-            exitBtn.addEventListener('click', toggleFullscreen);
-            
-            document.body.appendChild(exitBtn);
-        }
-
-        // Remove the floating fullscreen exit button
-        function removeFullscreenExitButton() {
-            const exitBtn = document.getElementById('fullscreenExitBtn');
-            if (exitBtn) {
-                exitBtn.removeEventListener('click', toggleFullscreen);
-                exitBtn.parentNode.removeChild(exitBtn);
-            }
-        }
 
         // Initialize the game
         function init() {
@@ -1131,7 +861,7 @@
         function createEnemies() {
             enemies = [];
             
-            // Adjust enemy count based on wave
+                        // Adjust enemy count based on wave
             const currentRows = Math.min(enemyRows + Math.floor(game.wave / 3), 8);
             const currentCols = Math.min(enemiesPerRow + Math.floor(game.wave / 5), 12);
             
@@ -1790,7 +1520,7 @@
                 if (effect.radius) {
                     // Bomb explosion
                     const opacity = effect.lifetime / 500;
-                                        ctx.beginPath();
+                    ctx.beginPath();
                     ctx.arc(effect.x, effect.y, effect.radius, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(230, 57, 70, ${opacity * 0.3})`;
                     ctx.fill();
@@ -1966,7 +1696,7 @@
                 
                 // Add animation based on game wave
                 if (game.wave > 2) {
-                    // Pulsating glow for higher waves
+                                      // Pulsating glow for higher waves
                     const glowSize = Math.sin(Date.now() / 500) * 2 + 2;
                     ctx.beginPath();
                     ctx.arc(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 
@@ -2121,10 +1851,8 @@
             }
         }
 
-        // Save high score
+        // Save high score without player name
         function saveHighScore() {
-            const playerName = playerNameInput.value.trim() || 'Anonymous';
-            
             // Get existing high scores from localStorage
             let highScores = [];
             try {
@@ -2133,9 +1861,9 @@
                 highScores = [];
             }
             
-            // Add new score
+            // Add new score with "Player" as name
             highScores.push({
-                name: playerName,
+                name: "Player",
                 score: game.score,
                 wave: game.wave,
                 difficulty: game.difficulty,
@@ -2214,18 +1942,18 @@
         function toggleFullscreen() {
             if (!game.isFullscreen) {
                 // Enter fullscreen
-                const element = isTouchDevice ? document.documentElement : canvas;
-                
-                if (element.requestFullscreen) {
-                    element.requestFullscreen();
-                } else if (element.webkitRequestFullscreen) {
-                    element.webkitRequestFullscreen();
-                } else if (element.msRequestFullscreen) {
-                    element.msRequestFullscreen();
+                if (canvas.requestFullscreen) {
+                    canvas.requestFullscreen();
+                } else if (canvas.webkitRequestFullscreen) {
+                    canvas.webkitRequestFullscreen();
+                } else if (canvas.msRequestFullscreen) {
+                    canvas.msRequestFullscreen();
                 }
                 
                 canvas.classList.add('fullscreen-canvas');
-                fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+                for (let i = 0; i < fullscreenBtn.length; i++) {
+                    fullscreenBtn[i].innerHTML = '<i class="fas fa-compress"></i>';
+                }
                 game.isFullscreen = true;
             } else {
                 // Exit fullscreen
@@ -2238,12 +1966,11 @@
                 }
                 
                 canvas.classList.remove('fullscreen-canvas');
-                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                for (let i = 0; i < fullscreenBtn.length; i++) {
+                    fullscreenBtn[i].innerHTML = '<i class="fas fa-expand"></i>';
+                }
                 game.isFullscreen = false;
             }
-            
-            // Update touch controls visibility
-            updateTouchControlsVisibility();
             
             // Resize canvas after fullscreen change
             setTimeout(resizeCanvas, 100);
@@ -2263,11 +1990,10 @@
                 
                 // Fullscreen was exited
                 canvas.classList.remove('fullscreen-canvas');
-                fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                for (let i = 0; i < fullscreenBtn.length; i++) {
+                    fullscreenBtn[i].innerHTML = '<i class="fas fa-expand"></i>';
+                }
                 game.isFullscreen = false;
-                
-                // Update touch controls visibility
-                updateTouchControlsVisibility();
                 
                 // Resize canvas after fullscreen change
                 setTimeout(resizeCanvas, 100);
@@ -2278,19 +2004,12 @@
         function resizeCanvas() {
             // If in fullscreen mode, use the entire screen
             if (game.isFullscreen) {
-                // For touch devices in fullscreen, use window dimensions
-                if (isTouchDevice) {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                    
-                    // Update player position if needed to keep within bounds
-                    if (player.x + player.width > canvas.width) {
-                        player.x = canvas.width - player.width;
-                    }
-                } else {
-                    // For non-touch devices, use the existing fullscreen logic
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                // Update player position if needed to keep within bounds
+                if (player.x + player.width > canvas.width) {
+                    player.x = canvas.width - player.width;
                 }
                 
                 // Adjust game elements for new canvas size
@@ -2414,7 +2133,10 @@
         startGameBtn.addEventListener('click', startGame);
         pauseBtn.addEventListener('click', togglePause);
         muteBtn.addEventListener('click', toggleMute);
-        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        Array.from(fullscreenBtn).forEach(elm => {
+            elm.addEventListener('click', toggleFullscreen);
+        });
+
 
         // Difficulty selection
         difficultyBtns.forEach(btn => {
@@ -2461,40 +2183,6 @@
             }
         });
 
-        // Touch controls for mobile
-        leftBtn.addEventListener('touchstart', (e) => { 
-            e.preventDefault();
-            player.isMovingLeft = true; 
-        });
-        leftBtn.addEventListener('touchend', () => { 
-            player.isMovingLeft = false; 
-        });
-        rightBtn.addEventListener('touchstart', (e) => { 
-            e.preventDefault();
-            player.isMovingRight = true; 
-        });
-        rightBtn.addEventListener('touchend', () => { 
-            player.isMovingRight = false; 
-        });
-        fireBtn.addEventListener('touchstart', (e) => { 
-            e.preventDefault();
-            player.isFiring = true; 
-        });
-        fireBtn.addEventListener('touchend', () => { 
-            player.isFiring = false; 
-        });
-
-        // Mouse controls for buttons
-        leftBtn.addEventListener('mousedown', () => { player.isMovingLeft = true; });
-        leftBtn.addEventListener('mouseup', () => { player.isMovingLeft = false; });
-        leftBtn.addEventListener('mouseleave', () => { player.isMovingLeft = false; });
-        rightBtn.addEventListener('mousedown', () => { player.isMovingRight = true; });
-        rightBtn.addEventListener('mouseup', () => { player.isMovingRight = false; });
-        rightBtn.addEventListener('mouseleave', () => { player.isMovingRight = false; });
-        fireBtn.addEventListener('mousedown', () => { player.isFiring = true; });
-        fireBtn.addEventListener('mouseup', () => { player.isFiring = false; });
-        fireBtn.addEventListener('mouseleave', () => { player.isFiring = false; });
-
         // Game over modal controls
         saveScoreBtn.addEventListener('click', () => {
             saveHighScore();
@@ -2512,9 +2200,6 @@
 
         // Initialize the game on load
         window.addEventListener('load', () => {
-            // Initialize touch controls
-            initTouchControls();
-            
             // Resize canvas
             resizeCanvas();
             
