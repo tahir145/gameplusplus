@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders | Classic Arcade Game</title>
     <meta name="description" content="Play the classic Space Invaders arcade game online. Defend Earth against alien invaders in this retro-styled browser game.">
@@ -23,6 +23,8 @@
     <link rel="canonical" href="https://spaceinvaderplus.onrender.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.ico.ico" type="image/x-icon" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7640664765387219"
+     crossorigin="anonymous"></script>
     <!-- Custom CSS -->
     <style>
         /* Base Styles and Reset */
@@ -37,6 +39,7 @@
             background-color: #0a0e17;
             color: #e0e0e0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -429,6 +432,209 @@
             100% { transform: translate(0, 0); }
         }
 
+        /* Stars Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* Loading Screen */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 14, 23, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-content {
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .loading-logo {
+            font-size: 3rem;
+            color: #4ecca3;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(78, 204, 163, 0.7);
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #4ecca3;
+        }
+
+        .progress-container {
+            width: 300px;
+            height: 10px;
+            background-color: #1a2639;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4ecca3, #66fcbe);
+            border-radius: 5px;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 10px rgba(78, 204, 163, 0.7);
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Welcome Screen */
+        #welcomeScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1900;
+            display: none;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            padding: 20px;
+            background: rgba(10, 14, 23, 0.7);
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #4ecca3;
+            text-shadow: 0 0 15px rgba(78, 204, 163, 0.7);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .welcome-btn {
+            background-color: #4ecca3;
+            color: #0a0e17;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .welcome-btn:hover {
+            background-color: #3aa889;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(78, 204, 163, 0.4);
+        }
+
+        /* Mobile Restriction Screen */
+        #mobileRestrictionScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 14, 23, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2100;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .restriction-icon {
+            font-size: 5rem;
+            color: #e63946;
+            margin-bottom: 30px;
+        }
+
+        .restriction-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #e63946;
+        }
+
+        .restriction-message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .desktop-only {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: #aaa;
+        }
+
+        .desktop-only i {
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+
+        /* Main Content (Game) */
+        #mainContent {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .game-container {
@@ -452,6 +658,34 @@
             
             .ad-sidebar-right {
                 order: 1;
+            }
+            
+            .loading-logo {
+                font-size: 2.5rem;
+            }
+            
+            .loading-text {
+                font-size: 1.2rem;
+            }
+            
+            .progress-container {
+                width: 250px;
+            }
+            
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .restriction-icon {
+                font-size: 4rem;
+            }
+            
+            .restriction-title {
+                font-size: 1.8rem;
             }
         }
 
@@ -499,123 +733,198 @@
             .game-controls button {
                 width: 100%;
             }
+            
+            .loading-logo {
+                font-size: 2rem;
+            }
+            
+            .loading-text {
+                font-size: 1rem;
+            }
+            
+            .progress-container {
+                width: 200px;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+            
+            .welcome-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header Ad Space -->
-        <div class="ad-container ad-header">
-            <div class="ad-placeholder">
-                <p><i class="fas fa-ad"></i> Advertisement</p>
+    <!-- Stars Background -->
+    <div class="stars" id="starsContainer"></div>
+    
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-rocket"></i> Space Invaders
             </div>
+            <div class="loading-text">Preparing for launch...</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">Loading: 0%</div>
         </div>
-        
-        <header>
-            <h1><i class="fas fa-rocket"></i> Space Invaders</h1>
-            <div class="controls-info">
-                <p><i class="fas fa-keyboard"></i> Use arrow keys or A/D to move, Space to shoot</p>
-                <p><i class="fas fa-warning"></i>  This game only works on computers. Anyone with a desktop or laptop can play comfortably and enjoy their time.</p>
-            </div>
-        </header>
-        
-        <div class="game-container">
-            <!-- Sidebar Ad Space (Left) -->
-            <div class="ad-container ad-sidebar-left">
-                <div class="ad-placeholder">
-                    <p><i class="fas fa-ad"></i> Ad</p>
-                </div>
-            </div>
-            
-            <!-- Game Canvas -->
-            <div class="game-wrapper">
-                
-                <div class="game-stats">
-                    <div class="score">Score: <span id="score">0</span></div>
-                    <div class="lives">Lives: <span id="lives">3</span></div>
-                    <div class="wave">Wave: <span id="wave">1</span></div>
-                </div>
-                <canvas id="gameCanvas"></canvas>
-                <div class="power-up-indicator" id="powerUpIndicator">
-                    <i class="fas fa-bolt"></i> <span id="powerUpType">Power-up</span>: <span id="powerUpTimer">10</span>s
-                </div>
-                <div class="game-controls">
-                    <button class="fullscreenBtn" id="startBtn"><i class="fas fa-play"></i> Start Game</button>
-                    <button id="pauseBtn"><i class="fas fa-pause"></i> Pause</button>
-                    <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
-                </div>
-                
-                <!-- Start Screen -->
-                <div id="startScreen">
-                    <h2><i class="fas fa-rocket"></i> Space Invaders</h2>
-                    <p>Defend Earth from alien invaders!</p>
-                    <div class="difficulty-selector">
-                        <button class="difficulty-btn selected" data-difficulty="easy">Easy</button>
-                        <button class="difficulty-btn" data-difficulty="medium">Medium</button>
-                        <button class="difficulty-btn" data-difficulty="hard">Hard</button>
-                    </div>
-                    <button class="fullscreenBtn" id="startGameBtn"><i class="fas fa-play"></i> Start Game</button>
-                </div>
-            </div>
-            
-            <!-- Sidebar Ad Space (Right) -->
-            <div class="ad-container ad-sidebar-right">
-                <div class="ad-placeholder">
-                    <p><i class="fas fa-ad"></i> Ad</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="game-info">
-            <div class="high-scores">
-                <h2><i class="fas fa-trophy"></i> High Scores</h2>
-                <ol id="highScoresList">
-                    <li>Player 1: 10000</li>
-                    <li>Player 2: 8500</li>
-                    <li>Player 3: 7200</li>
-                </ol>
-            </div>
-            <div class="game-instructions">
-                <h2><i class="fas fa-info-circle"></i> How to Play</h2>
-                <p>Defend Earth from alien invaders! Move your ship and shoot down the aliens before they reach the bottom of the screen.</p>
-                <ul>
-                    <li><i class="fas fa-arrow-left"></i> / <i class="fas fa-arrow-right"></i> or A/D: Move ship</li>
-                    <li><i class="fas fa-space-shuttle"></i> Space: Fire</li>
-                    <li><i class="fas fa-pause"></i> P: Pause game</li>
-                    <li><i class="fas fa-expand"></i> F: Toggle fullscreen</li>
-                </ul>
-                <p><strong>Power-ups:</strong></p>
-                <ul>
-                    <li><i class="fas fa-bolt"></i> Rapid Fire: Shoot faster</li>
-                    <li><i class="fas fa-shield-alt"></i> Shield: Temporary invincibility</li>
-                    <li><i class="fas fa-meteor"></i> Multi-shot: Fire multiple projectiles</li>
-                    <li><i class="fas fa-bomb"></i> Bomb: Destroys all enemies in a radius</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Footer Ad Space -->
-        <div class="ad-container ad-footer">
-            <div class="ad-placeholder">
-                <p><i class="fas fa-ad"></i> Advertisement</p>
-            </div>
-        </div>
-        
-         <footer>
-            <p>Developed by Tahir Mohammed. © <span id="year"></span> Space Invaders Game. All rights reserved.</p>
-
-        <script>
-                  document.getElementById("year").textContent = new Date().getFullYear();
-         </script>
-
-            <div class="social-links">
-                <a target="_blank" href="https://web.facebook.com/profile.php?id=61578530544135"><i class="fab fa-facebook"></i></a>
-                <a target="_blank" href="https://github.com/tahir145"><i class="fab fa-github"></i></a>
-            </div>
-        </footer>
     </div>
     
-    <!-- Game Over Modal -->
+    <!-- Welcome Screen (First Visit) -->
+    <div id="welcomeScreen">
+        <video class="video-background" autoplay muted loop>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4" type="video/mp4">
+            <!-- Fallback background if video doesn't load -->
+        </video>
+        <div class="welcome-content">
+            <h1 class="welcome-title"><i class="fas fa-rocket"></i> Space Invaders</h1>
+            <p class="welcome-subtitle">Welcome to the classic arcade experience reimagined for modern browsers. Defend Earth against waves of alien invaders in this timeless battle for galactic supremacy.</p>
+            <a href="#" class="welcome-btn" id="enterGameBtn">Launch Game</a>
+        </div>
+    </div>
+    
+    <!-- Mobile Restriction Screen -->
+    <div id="mobileRestrictionScreen">
+        <div class="restriction-icon">
+            <i class="fas fa-ban"></i>
+        </div>
+        <h2 class="restriction-title">Desktop Only</h2>
+        <p class="restriction-message">This game is for PC only - a mobile version will be developed soon. Please access from a desktop or laptop computer for the full experience.</p>
+        <div class="desktop-only">
+            <i class="fas fa-desktop"></i>
+            <span>Compatible with desktop browsers</span>
+        </div>
+    </div>
+    
+    <!-- Main Content (Game) -->
+    <div id="mainContent">
+        <div class="container">
+            <!-- Header Ad Space -->
+            <div class="ad-container ad-header">
+                <div class="ad-placeholder">
+                    <p><i class="fas fa-ad"></i> Advertisement</p>
+                </div>
+            </div>
+            
+            <header>
+                <h1><i class="fas fa-rocket"></i> Space Invaders</h1>
+                <div class="controls-info">
+                    <p><i class="fas fa-keyboard"></i> Use arrow keys or A/D to move, Space to shoot</p>
+                    <p><i class="fas fa-warning"></i>  This game only works on computers. Anyone with a desktop or laptop can play comfortably and enjoy their time.</p>
+                    
+                </div>
+            </header>
+            
+            <div class="game-container">
+                <!-- Sidebar Ad Space (Left) -->
+                <div class="ad-container ad-sidebar-left">
+                    <div class="ad-placeholder">
+                        <p><i class="fas fa-ad"></i> Ad</p>
+                    </div>
+                </div>
+                
+                <!-- Game Canvas -->
+                <div class="game-wrapper">
+                    
+                    <div class="game-stats">
+                        <div class="score">Score: <span id="score">0</span></div>
+                        <div class="lives">Lives: <span id="lives">3</span></div>
+                        <div class="wave">Wave: <span id="wave">1</span></div>
+                    </div>
+                    <canvas id="gameCanvas"></canvas>
+                    <div class="power-up-indicator" id="powerUpIndicator">
+                        <i class="fas fa-bolt"></i> <span id="powerUpType">Power-up</span>: <span id="powerUpTimer">10</span>s
+                    </div>
+                    <div class="game-controls">
+                        <button class="fullscreenBtn" id="startBtn"><i class="fas fa-play"></i> Start Game</button>
+                        <button id="pauseBtn"><i class="fas fa-pause"></i> Pause</button>
+                        <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
+                    </div>
+                    
+                    <!-- Start Screen -->
+                    <div id="startScreen">
+                        <h2><i class="fas fa-rocket"></i> Space Invaders</h2>
+                        <p>Defend Earth from alien invaders!</p>
+                        <div class="difficulty-selector">
+                            <button class="difficulty-btn selected" data-difficulty="easy">Easy</button>
+                            <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                            <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                        </div>
+                        <button class="fullscreenBtn" id="startGameBtn"><i class="fas fa-play"></i> Start Game</button>
+                    </div>
+                </div>
+                
+                <!-- Sidebar Ad Space (Right) -->
+                <div class="ad-container ad-sidebar-right">
+                    <div class="ad-placeholder">
+                        <p><i class="fas fa-ad"></i> Ad</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-info">
+                <div class="high-scores">
+                    <h2><i class="fas fa-trophy"></i> High Scores</h2>
+                    <ol id="highScoresList">
+                        <li>Player 1: 10000</li>
+                        <li>Player 2: 8500</li>
+                        <li>Player 3: 7200</li>
+                    </ol>
+                </div>
+                <div class="game-instructions">
+                    <h2><i class="fas fa-info-circle"></i> How to Play</h2>
+                    <p>Defend Earth from alien invaders! Move your ship and shoot down the aliens before they reach the bottom of the screen.</p>
+                    <ul>
+                        <li><i class="fas fa-arrow-left"></i> / <i class="fas fa-arrow-right"></i> or A/D: Move ship</li>
+                        <li><i class="fas fa-space-shuttle"></i> Space: Fire</li>
+                        <li><i class="fas fa-pause"></i> P: Pause game</li>
+                        <li><i class="fas fa-expand"></i> F: Toggle fullscreen</li>
+                    </ul>
+                    <p><strong>Power-ups:</strong></p>
+                    <ul>
+                        <li><i class="fas fa-bolt"></i> Rapid Fire: Shoot faster</li>
+                        <li><i class="fas fa-shield-alt"></i> Shield: Temporary invincibility</li>
+                        <li><i class="fas fa-meteor"></i> Multi-shot: Fire multiple projectiles</li>
+                        <li><i class="fas fa-bomb"></i> Bomb: Destroys all enemies in a radius</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Ad Space -->
+            <div class="ad-container ad-footer">
+                <div class="ad-placeholder">
+                    <p><i class="fas fa-ad"></i> Advertisement</p>
+                </div>
+            </div>
+            
+             <footer>
+                <p>Developed by Tahir Mohammed. © <span id="year"></span> Space Invaders Game. All rights reserved.</p>
+    
+            <script>
+                      document.getElementById("year").textContent = new Date().getFullYear();
+             </script>
+    
+                <div class="social-links">
+                    <a target="_blank" href="https://web.facebook.com/profile.php?id=61578530544135"><i class="fab fa-facebook"></i></a>
+                    <a target="_blank" href="https://github.com/tahir145"><i class="fab fa-github"></i></a>
+                    <a href="about.html">About us <i class="fas fa-info-circle"></i></a>
+                    <a href="contact.html">Contact us <i class="fas fa-envelope"></i></a>
+    
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+        <!-- Game Over Modal -->
     <div id="gameOverModal" class="modal">
         <div class="modal-content">
             <h2><i class="fas fa-skull-crossbones"></i> Game Over</h2>
@@ -627,6 +936,101 @@
     
     <!-- Custom JavaScript -->
     <script>
+        // Create stars background
+        function createStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3;
+                
+                // Random animation delay
+                const delay = Math.random() * 4;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Check if device is mobile
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || 
+                   (navigator.userAgent.indexOf('IEMobile') !== -1) ||
+                   (window.matchMedia("(max-width: 768px)").matches);
+        }
+        
+        // Check if it's the first visit
+        function isFirstVisit() {
+            return localStorage.getItem('spaceInvadersVisited') === null;
+        }
+        
+        // Set visited flag
+        function setVisitedFlag() {
+            localStorage.setItem('spaceInvadersVisited', 'true');
+        }
+        
+        // Simulate loading progress
+        function simulateLoading() {
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `Loading: ${Math.floor(progress)}%`;
+                
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('loadingScreen').style.display = 'none';
+                            
+                            // After loading completes, check device type and first visit
+                            handlePostLoading();
+                        }, 500);
+                    }, 500);
+                }
+            }, 200);
+        }
+        
+        // Handle what happens after loading completes
+        function handlePostLoading() {
+            if (isMobileDevice()) {
+                // Show mobile restriction screen
+                document.getElementById('mobileRestrictionScreen').style.display = 'flex';
+            } else if (isFirstVisit()) {
+                // Show welcome screen for first-time visitors
+                document.getElementById('welcomeScreen').style.display = 'block';
+                setVisitedFlag();
+            } else {
+                // Show main content directly for returning desktop users
+                showMainContent();
+            }
+        }
+        
+        // Show main content (game)
+        function showMainContent() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.style.opacity = '1';
+        }
+
         // Get DOM elements
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -862,7 +1266,7 @@
         function createEnemies() {
             enemies = [];
             
-                        // Adjust enemy count based on wave
+            // Adjust enemy count based on wave
             const currentRows = Math.min(enemyRows + Math.floor(game.wave / 3), 8);
             const currentCols = Math.min(enemiesPerRow + Math.floor(game.wave / 5), 12);
             
@@ -1364,7 +1768,7 @@
             return game.lives <= 0;
         }
 
-        // Player hit by enemy projectile
+               // Player hit by enemy projectile
         function playerHit() {
             game.lives--;
             livesElement.textContent = game.lives;
@@ -1697,7 +2101,7 @@
                 
                 // Add animation based on game wave
                 if (game.wave > 2) {
-                                      // Pulsating glow for higher waves
+                    // Pulsating glow for higher waves
                     const glowSize = Math.sin(Date.now() / 500) * 2 + 2;
                     ctx.beginPath();
                     ctx.arc(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 
@@ -2138,6 +2542,12 @@
             elm.addEventListener('click', toggleFullscreen);
         });
 
+        // Welcome screen button
+        document.getElementById('enterGameBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('welcomeScreen').style.display = 'none';
+            showMainContent();
+        });
 
         // Difficulty selection
         difficultyBtns.forEach(btn => {
@@ -2167,7 +2577,7 @@
             if (e.key === 'm' || e.key === 'M') {
                 toggleMute();
             }
-            if (e.key === 'Enter' && !game.isRunning) {
+                        if (e.key === 'Enter' && !game.isRunning) {
                 startGame();
             }
         });
@@ -2199,19 +2609,19 @@
         // Handle window resize
         window.addEventListener('resize', resizeCanvas);
 
-        // Initialize the game on load
-        window.addEventListener('load', () => {
-            // Resize canvas
-            resizeCanvas();
+        // Initialize everything when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            // Create stars background
+            createStars();
             
-            // Update high scores display
-            updateHighScoresDisplay();
-            
-            // Show start screen
-            startScreen.style.display = 'flex';
+            // Start loading sequence
+            simulateLoading();
             
             // Initialize game state
             init();
+            
+            // Update high scores display
+            updateHighScoresDisplay();
             
             // Resume audio context if suspended (for browsers that require user interaction)
             document.addEventListener('click', function resumeAudio() {
