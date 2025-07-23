@@ -4,25 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders | Classic Arcade Game</title>
-    
-  
     <meta name="description" content="Play the classic Space Invaders arcade game online. Defend Earth against alien invaders in this retro-styled browser game.">
     <meta name="keywords" content="space invaders, arcade game, retro game, browser game, javascript game">
     <meta name="author" content="Tahir med ">
-  
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://spaceinvaderplus.netlify.app/space-invaders">
+    <meta property="og:url" content="https://spaceinvaderplus.onrender.com/">
     <meta property="og:title" content="Space Invaders | Classic Arcade Game">
     <meta property="og:description" content="Play the classic Space Invaders arcade game online. Defend Earth against alien invaders in this retro-styled browser game.">
-    <meta property="og:image" content="https://spaceinvaderplus.netlify.app/space-invaders-preview.jpg">
-   
+    <meta property="og:image" content="https://spaceinvaderplus.onrender.com/space-invaders-preview.jpg">
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://spaceinvaderplus.netlify.app/space-invaders">
+    <meta property="twitter:url" content="https://spaceinvaderplus.onrender.com/">
     <meta property="twitter:title" content="Space Invaders | Classic Arcade Game">
     <meta property="twitter:description" content="Play the classic Space Invaders arcade game online. Defend Earth against alien invaders in this retro-styled browser game.">
-    <meta property="twitter:image" content="https://spaceinvaderplus.netlify.app/space-invaders-preview.jpg">
+    <meta property="twitter:image" content="https://spaceinvaderplus.onrender.com/space-invaders-preview.jpg">
     <meta name="theme-color" content="#000000" />
-
+     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://spaceinvaderplus.onrender.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.ico.ico" type="image/x-icon" />
     <!-- Custom CSS -->
@@ -150,7 +147,7 @@
             font-size: 1.1rem;
         }
 
-        .score, .lives, .level {
+        .score, .lives, .wave {
             padding: 5px 10px;
             background-color: #0a0e17;
             border-radius: 5px;
@@ -423,8 +420,8 @@
             margin-top: 20px;
         }
 
-        /* Level transition */
-        #levelTransition {
+        /* Wave transition */
+        #waveTransition {
             position: absolute;
             top: 0;
             left: 0;
@@ -437,7 +434,7 @@
             z-index: 40;
         }
 
-        #levelTransition h3 {
+        #waveTransition h3 {
             font-size: 2rem;
             color: #4ecca3;
             text-shadow: 0 0 10px rgba(78, 204, 163, 0.7);
@@ -643,7 +640,7 @@
                 <div class="game-stats">
                     <div class="score">Score: <span id="score">0</span></div>
                     <div class="lives">Lives: <span id="lives">3</span></div>
-                    <div class="level">Level: <span id="level">1</span></div>
+                    <div class="wave">Wave: <span id="wave">1</span></div>
                 </div>
                 <canvas id="gameCanvas"></canvas>
                 <div class="power-up-indicator" id="powerUpIndicator">
@@ -672,9 +669,9 @@
                     <button id="startGameBtn"><i class="fas fa-play"></i> Start Game</button>
                 </div>
                 
-                <!-- Level Transition -->
-                <div id="levelTransition">
-                    <h3>Level <span id="newLevel">1</span></h3>
+                <!-- Wave Transition -->
+                <div id="waveTransition">
+                    <h3>Wave <span id="newWave">1</span></h3>
                 </div>
             </div>
             
@@ -727,6 +724,14 @@
             </div>
         </div>
         
+        
+        <!-- Footer Ad Space -->
+        <div class="ad-container ad-footer">
+            <div class="ad-placeholder">
+                <p><i class="fas fa-ad"></i> Advertisement</p>
+            </div>
+        </div>
+        
        <footer>
             <p>Developed by Tahir Mohammed. © <span id="year"></span> Space Invaders Game. All rights reserved.</p>
 
@@ -766,7 +771,7 @@
         const fireBtn = document.getElementById('fireBtn');
         const scoreElement = document.getElementById('score');
         const livesElement = document.getElementById('lives');
-        const levelElement = document.getElementById('level');
+        const waveElement = document.getElementById('wave');
         const gameOverModal = document.getElementById('gameOverModal');
         const finalScoreElement = document.getElementById('finalScore');
         const playerNameInput = document.getElementById('playerName');
@@ -777,11 +782,12 @@
         const startScreen = document.getElementById('startScreen');
         const startGameBtn = document.getElementById('startGameBtn');
         const difficultyBtns = document.querySelectorAll('.difficulty-btn');
-        const levelTransition = document.getElementById('levelTransition');
-        const newLevelElement = document.getElementById('newLevel');
+        const waveTransition = document.getElementById('waveTransition');
+        const newWaveElement = document.getElementById('newWave');
         const powerUpIndicator = document.getElementById('powerUpIndicator');
         const powerUpType = document.getElementById('powerUpType');
         const powerUpTimer = document.getElementById('powerUpTimer');
+        const mobileControls = document.querySelector('.mobile-controls');
 
         // Set canvas dimensions
         canvas.width = 600;
@@ -802,14 +808,17 @@
             isFullscreen: false,
             score: 0,
             lives: 3,
-            level: 1,
+            wave: 1,
             gameSpeed: 1,
             lastTime: 0,
             enemySpeed: 1,
             enemyFireRate: 0.005,
             animationFrameId: null,
             difficulty: 'easy',
-            powerUps: []
+            powerUps: [],
+            enemyCount: 0,
+            waveDelay: 1000, // ms between waves
+            difficultyMultiplier: 1.0
         };
 
         // Player ship
@@ -900,13 +909,13 @@
             shoot: () => createOscillatorSound(880, 'square', 0.1, 0.1),
             explosion: () => createOscillatorSound(100, 'sawtooth', 0.3, 0.2),
             enemyShoot: () => createOscillatorSound(440, 'square', 0.1, 0.05),
-            playerHit: () => {
+                       playerHit: () => {
                 createOscillatorSound(200, 'sawtooth', 0.3, 0.3);
                 createOscillatorSound(150, 'sawtooth', 0.3, 0.3);
             },
-            levelUp: () => {
+            waveComplete: () => {
                 createOscillatorSound(440, 'sine', 0.1, 0.2);
-                                setTimeout(() => createOscillatorSound(660, 'sine', 0.1, 0.2), 100);
+                setTimeout(() => createOscillatorSound(660, 'sine', 0.1, 0.2), 100);
                 setTimeout(() => createOscillatorSound(880, 'sine', 0.2, 0.2), 200);
             },
             gameOver: () => {
@@ -1009,8 +1018,6 @@
 
         // Update visibility of touch controls based on fullscreen state
         function updateTouchControlsVisibility() {
-            const mobileControls = document.querySelector('.mobile-controls');
-            
             if (game.isFullscreen && isTouchDevice) {
                 // Hide on-screen buttons in fullscreen touch mode
                 if (mobileControls) mobileControls.style.display = 'none';
@@ -1056,9 +1063,10 @@
         function init() {
             // Reset game state
             game.score = 0;
-            game.level = 1;
+            game.wave = 1;
             game.isRunning = false;
             game.isPaused = false;
+            game.difficultyMultiplier = 1.0;
             
             // Set difficulty
             setDifficulty(game.difficulty);
@@ -1066,7 +1074,7 @@
             // Update UI
             scoreElement.textContent = game.score;
             livesElement.textContent = game.lives;
-            levelElement.textContent = game.level;
+            waveElement.textContent = game.wave;
             
             // Reset player position and state
             player.x = canvas.width / 2 - player.width / 2;
@@ -1123,8 +1131,12 @@
         function createEnemies() {
             enemies = [];
             
-            for (let row = 0; row < enemyRows; row++) {
-                for (let col = 0; col < enemiesPerRow; col++) {
+            // Adjust enemy count based on wave
+            const currentRows = Math.min(enemyRows + Math.floor(game.wave / 3), 8);
+            const currentCols = Math.min(enemiesPerRow + Math.floor(game.wave / 5), 12);
+            
+            for (let row = 0; row < currentRows; row++) {
+                for (let col = 0; col < currentCols; col++) {
                     const enemy = {
                         x: col * (enemyWidth + enemyPadding) + 50,
                         y: row * (enemyHeight + enemyPadding) + 50,
@@ -1132,11 +1144,13 @@
                         height: enemyHeight,
                         type: row, // Different enemy types based on row
                         isAlive: true,
-                        points: (enemyRows - row) * 10 // Points based on row
+                        points: (currentRows - row) * 10 * game.difficultyMultiplier // Points based on row and difficulty
                     };
                     enemies.push(enemy);
                 }
             }
+            
+            game.enemyCount = enemies.length;
         }
 
         // Create defensive barriers
@@ -1212,8 +1226,35 @@
                 return;
             }
             
+            // Check if all enemies are destroyed
+            if (enemies.filter(enemy => enemy.isAlive).length === 0) {
+                startNextWave();
+                return;
+            }
+            
             // Continue the game loop
             game.animationFrameId = requestAnimationFrame(gameLoop);
+        }
+
+        // Start next wave
+        function startNextWave() {
+            game.wave++;
+            waveElement.textContent = game.wave;
+            
+            // Increase difficulty
+            game.enemySpeed += 0.1;
+            game.enemyFireRate += 0.001;
+            game.difficultyMultiplier += 0.1;
+            
+            // Create new enemies immediately
+            createEnemies();
+            
+            // Continue the game loop
+            game.lastTime = performance.now();
+            game.animationFrameId = requestAnimationFrame(gameLoop);
+            
+            // Play wave complete sound
+            playSound('waveComplete');
         }
 
         // Update player position and state
@@ -1336,13 +1377,8 @@
                 }
             }
             
-            // Check if all enemies are destroyed
-            if (aliveEnemies.length === 0) {
-                levelUp();
-            }
-            
-            // Randomly drop power-ups (more likely on higher levels)
-            if (aliveEnemies.length > 0 && Math.random() < 0.0005 * game.level) {
+            // Randomly drop power-ups (more likely on higher waves)
+            if (aliveEnemies.length > 0 && Math.random() < 0.0005 * game.wave) {
                 const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
                 createPowerUp(randomEnemy.x + enemyWidth / 2, randomEnemy.y + enemyHeight);
             }
@@ -1611,29 +1647,6 @@
             }, 10);
         }
 
-        // Level up
-        function levelUp() {
-            game.level++;
-            levelElement.textContent = game.level;
-            
-            // Increase difficulty
-            game.enemySpeed += 0.2;
-            game.enemyFireRate += 0.002;
-            
-            // Show level transition
-            newLevelElement.textContent = game.level;
-            levelTransition.style.display = 'flex';
-            
-            // Play level up sound
-            playSound('levelUp');
-            
-            // Hide transition after delay
-            setTimeout(() => {
-                levelTransition.style.display = 'none';
-                createEnemies();
-            }, 2000);
-        }
-
         // End the game
         function endGame() {
             game.isRunning = false;
@@ -1690,7 +1703,7 @@
                 y: enemy.y + enemy.height,
                 width: 4,
                 height: 15,
-                speed: 3 + (game.level * 0.2),
+                speed: 3 + (game.wave * 0.2),
                 color: '#e74c3c'
             };
             
@@ -1777,7 +1790,7 @@
                 if (effect.radius) {
                     // Bomb explosion
                     const opacity = effect.lifetime / 500;
-                    ctx.beginPath();
+                                        ctx.beginPath();
                     ctx.arc(effect.x, effect.y, effect.radius, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(230, 57, 70, ${opacity * 0.3})`;
                     ctx.fill();
@@ -1796,7 +1809,7 @@
                 if (effect.text) {
                     const opacity = effect.lifetime / 1000;
                     ctx.font = 'bold 16px Arial';
-                                        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
                     ctx.textAlign = 'center';
                     ctx.fillText(effect.text, effect.x, effect.y + (1000 - effect.lifetime) * 0.05);
                 }
@@ -1951,9 +1964,9 @@
                         break;
                 }
                 
-                // Add animation based on game level
-                if (game.level > 2) {
-                    // Pulsating glow for higher levels
+                // Add animation based on game wave
+                if (game.wave > 2) {
+                    // Pulsating glow for higher waves
                     const glowSize = Math.sin(Date.now() / 500) * 2 + 2;
                     ctx.beginPath();
                     ctx.arc(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 
@@ -2124,7 +2137,7 @@
             highScores.push({
                 name: playerName,
                 score: game.score,
-                level: game.level,
+                wave: game.wave,
                 difficulty: game.difficulty,
                 date: new Date().toISOString()
             });
@@ -2162,22 +2175,22 @@
             highScores.forEach((entry, index) => {
                 const listItem = document.createElement('li');
                 const difficultyBadge = getDifficultyBadge(entry.difficulty || 'medium');
-                listItem.innerHTML = `${entry.name}: ${entry.score} ${difficultyBadge} (Level ${entry.level || 1})`;
+                listItem.innerHTML = `${entry.name}: ${entry.score} ${difficultyBadge} (Wave ${entry.wave || 1})`;
                 highScoresList.appendChild(listItem);
             });
             
             // Fill with placeholder scores if needed
             if (highScores.length < 3) {
                 const placeholders = [
-                    { name: 'Player 1', score: 10000, level: 5, difficulty: 'hard' },
-                    { name: 'Player 2', score: 8500, level: 4, difficulty: 'medium' },
-                    { name: 'Player 3', score: 7200, level: 3, difficulty: 'easy' }
+                    { name: 'Player 1', score: 10000, wave: 5, difficulty: 'hard' },
+                    { name: 'Player 2', score: 8500, wave: 4, difficulty: 'medium' },
+                    { name: 'Player 3', score: 7200, wave: 3, difficulty: 'easy' }
                 ];
                 
                 for (let i = highScores.length; i < 3; i++) {
                     const listItem = document.createElement('li');
                     const difficultyBadge = getDifficultyBadge(placeholders[i].difficulty);
-                    listItem.innerHTML = `${placeholders[i].name}: ${placeholders[i].score} ${difficultyBadge} (Level ${placeholders[i].level})`;
+                    listItem.innerHTML = `${placeholders[i].name}: ${placeholders[i].score} ${difficultyBadge} (Wave ${placeholders[i].wave})`;
                     listItem.classList.add('placeholder');
                     highScoresList.appendChild(listItem);
                 }
