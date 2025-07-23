@@ -480,35 +480,131 @@
             color: #4ecca3;
             margin-bottom: 20px;
             text-shadow: 0 0 15px rgba(78, 204, 163, 0.7);
+            animation: pulsate 2s infinite ease-in-out;
+        }
+
+        @keyframes pulsate {
+            0%, 100% { text-shadow: 0 0 15px rgba(78, 204, 163, 0.7); }
+            50% { text-shadow: 0 0 30px rgba(78, 204, 163, 0.9); }
         }
 
         .loading-text {
             font-size: 1.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: #4ecca3;
+            opacity: 0.8;
+            animation: fadeInOut 2s infinite ease-in-out;
         }
 
-        .progress-container {
-            width: 300px;
-            height: 10px;
-            background-color: #1a2639;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 15px;
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
-        .progress-bar {
+        /* Space Engine Animation */
+        .space-engine {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .engine-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: #4ecca3;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #4ecca3, 0 0 40px #4ecca3;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(0.8);
+                box-shadow: 0 0 20px #4ecca3, 0 0 40px #4ecca3;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 30px #4ecca3, 0 0 60px #4ecca3;
+            }
+        }
+
+        .engine-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border-radius: 50%;
+            border: 2px solid rgba(78, 204, 163, 0.5);
+            transform: translate(-50%, -50%);
+        }
+
+        .ring1 {
+            width: 50px;
+            height: 50px;
+            animation: rotate 3s linear infinite;
+        }
+
+        .ring2 {
+            width: 80px;
+            height: 80px;
+            animation: rotate 5s linear infinite reverse;
+        }
+
+        .ring3 {
+            width: 110px;
+            height: 110px;
+            animation: rotate 7s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .engine-particles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
             height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #4ecca3, #66fcbe);
-            border-radius: 5px;
-            transition: width 0.4s ease;
-            box-shadow: 0 0 10px rgba(78, 204, 163, 0.7);
+            transform: translate(-50%, -50%);
         }
 
-        .progress-text {
-            font-size: 0.9rem;
-            color: #aaa;
+        .engine-particles::before,
+        .engine-particles::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #4ecca3;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .engine-particles::before {
+            animation: particles 3s infinite ease-out;
+        }
+
+        .engine-particles::after {
+            animation: particles 3s 1.5s infinite ease-out;
+        }
+
+        @keyframes particles {
+            0% {
+                top: 50%;
+                left: 50%;
+                opacity: 1;
+            }
+            100% {
+                top: calc(50% + (Math.random() - 0.5) * 100px);
+                left: calc(50% + (Math.random() - 0.5) * 100px);
+                opacity: 0;
+                transform: scale(0);
+            }
         }
 
         /* Welcome Screen */
@@ -635,6 +731,55 @@
             transition: opacity 1s ease;
         }
 
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .visitor-bubble {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(19, 26, 41, 0.8);
+            border: 2px solid #4ecca3;
+            border-radius: 20px;
+            padding: 8px 15px;
+            box-shadow: 0 0 15px rgba(78, 204, 163, 0.5);
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .visitor-bubble:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(78, 204, 163, 0.7);
+        }
+
+        .visitor-bubble i {
+            color: #4ecca3;
+            font-size: 1.1rem;
+        }
+
+        #visitorCount {
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .visitor-bubble.pulse {
+            animation: counterPulse 0.5s ease-in-out;
+        }
+
+        @keyframes counterPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .game-container {
@@ -668,10 +813,6 @@
                 font-size: 1.2rem;
             }
             
-            .progress-container {
-                width: 250px;
-            }
-            
             .welcome-title {
                 font-size: 2.5rem;
             }
@@ -686,6 +827,11 @@
             
             .restriction-title {
                 font-size: 1.8rem;
+            }
+            
+            .visitor-counter {
+                bottom: 10px;
+                right: 10px;
             }
         }
 
@@ -742,10 +888,6 @@
                 font-size: 1rem;
             }
             
-            .progress-container {
-                width: 200px;
-            }
-            
             .welcome-title {
                 font-size: 2rem;
             }
@@ -772,10 +914,15 @@
                 <i class="fas fa-rocket"></i> Space Invaders
             </div>
             <div class="loading-text">Preparing for launch...</div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
+            
+            <!-- Space Engine Animation -->
+            <div class="space-engine">
+                <div class="engine-core"></div>
+                <div class="engine-ring ring1"></div>
+                <div class="engine-ring ring2"></div>
+                <div class="engine-ring ring3"></div>
+                <div class="engine-particles"></div>
             </div>
-            <div class="progress-text" id="progressText">Loading: 0%</div>
         </div>
     </div>
     
@@ -802,6 +949,14 @@
         <div class="desktop-only">
             <i class="fas fa-desktop"></i>
             <span>Compatible with desktop browsers</span>
+        </div>
+    </div>
+    
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        <div class="visitor-bubble">
+            <i class="fas fa-users"></i>
+            <span id="visitorCount">1</span>
         </div>
     </div>
     
@@ -835,7 +990,7 @@
                 <!-- Game Canvas -->
                 <div class="game-wrapper">
                     
-                    <div class="game-stats">
+                                        <div class="game-stats">
                         <div class="score">Score: <span id="score">0</span></div>
                         <div class="lives">Lives: <span id="lives">3</span></div>
                         <div class="wave">Wave: <span id="wave">1</span></div>
@@ -924,7 +1079,7 @@
         </div>
     </div>
     
-        <!-- Game Over Modal -->
+    <!-- Game Over Modal -->
     <div id="gameOverModal" class="modal">
         <div class="modal-content">
             <h2><i class="fas fa-skull-crossbones"></i> Game Over</h2>
@@ -982,32 +1137,20 @@
             localStorage.setItem('spaceInvadersVisited', 'true');
         }
         
-        // Simulate loading progress
+        // Simulate loading with elegant animation
         function simulateLoading() {
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            let progress = 0;
+            // Generate random loading time between 1.5 and 3 seconds
+            const loadingTime = Math.random() * 1500 + 1500;
             
-            const interval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress > 100) progress = 100;
-                
-                progressBar.style.width = `${progress}%`;
-                progressText.textContent = `Loading: ${Math.floor(progress)}%`;
-                
-                if (progress === 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        document.getElementById('loadingScreen').style.opacity = '0';
-                        setTimeout(() => {
-                            document.getElementById('loadingScreen').style.display = 'none';
-                            
-                            // After loading completes, check device type and first visit
-                            handlePostLoading();
-                        }, 500);
-                    }, 500);
-                }
-            }, 200);
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    
+                    // After loading completes, check device type and first visit
+                    handlePostLoading();
+                }, 500);
+            }, loadingTime);
         }
         
         // Handle what happens after loading completes
@@ -1029,6 +1172,80 @@
         function showMainContent() {
             const mainContent = document.getElementById('mainContent');
             mainContent.style.opacity = '1';
+        }
+        
+        // Visitor counter functionality
+        function initVisitorCounter() {
+            const visitorCountElement = document.getElementById('visitorCount');
+            const visitorBubble = document.querySelector('.visitor-bubble');
+            
+            // Generate a unique visitor ID for this session
+            const visitorId = 'visitor_' + Math.random().toString(36).substr(2, 9);
+            
+            // Function to update the counter
+            function updateCounter(count) {
+                // Add pulse animation when count changes
+                if (parseInt(visitorCountElement.textContent) !== count) {
+                    visitorBubble.classList.add('pulse');
+                    setTimeout(() => {
+                        visitorBubble.classList.remove('pulse');
+                    }, 500);
+                }
+                
+                visitorCountElement.textContent = count;
+            }
+            
+            // Simple implementation using localStorage for demo purposes
+            function simulateVisitorTracking() {
+                // Store this visitor in localStorage
+                try {
+                    // Get current visitors
+                    let visitors = JSON.parse(localStorage.getItem('spaceInvadersVisitors')) || {};
+                    
+                    // Add this visitor with timestamp
+                    visitors[visitorId] = Date.now();
+                    
+                    // Clean up old visitors (inactive for more than 5 minutes)
+                    const currentTime = Date.now();
+                    Object.keys(visitors).forEach(id => {
+                        if (currentTime - visitors[id] > 5 * 60 * 1000) {
+                            delete visitors[id];
+                        }
+                    });
+                    
+                    // Save updated visitors
+                    localStorage.setItem('spaceInvadersVisitors', JSON.stringify(visitors));
+                    
+                    // Update counter
+                    updateCounter(Object.keys(visitors).length);
+                } catch (e) {
+                    console.log('Error updating visitor count:', e);
+                }
+            }
+            
+            // Initialize and set up polling
+            simulateVisitorTracking();
+            
+            // Update every 30 seconds
+            setInterval(simulateVisitorTracking, 30000);
+            
+            // Update when tab becomes visible again
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    simulateVisitorTracking();
+                }
+            });
+            
+            // Clean up when user leaves
+            window.addEventListener('beforeunload', () => {
+                try {
+                    let visitors = JSON.parse(localStorage.getItem('spaceInvadersVisitors')) || {};
+                    delete visitors[visitorId];
+                    localStorage.setItem('spaceInvadersVisitors', JSON.stringify(visitors));
+                } catch (e) {
+                    console.log('Error removing visitor:', e);
+                }
+            });
         }
 
         // Get DOM elements
@@ -1564,7 +1781,7 @@
             }
         }
 
-        // Check for collisions
+               // Check for collisions
         function checkCollisions() {
             // Player projectiles vs enemies
             for (let i = playerProjectiles.length - 1; i >= 0; i--) {
@@ -1768,7 +1985,7 @@
             return game.lives <= 0;
         }
 
-               // Player hit by enemy projectile
+        // Player hit by enemy projectile
         function playerHit() {
             game.lives--;
             livesElement.textContent = game.lives;
@@ -2370,7 +2587,7 @@
                     document.msExitFullscreen();
                 }
                 
-                canvas.classList.remove('fullscreen-canvas');
+                               canvas.classList.remove('fullscreen-canvas');
                 for (let i = 0; i < fullscreenBtn.length; i++) {
                     fullscreenBtn[i].innerHTML = '<i class="fas fa-expand"></i>';
                 }
@@ -2577,7 +2794,7 @@
             if (e.key === 'm' || e.key === 'M') {
                 toggleMute();
             }
-                        if (e.key === 'Enter' && !game.isRunning) {
+            if (e.key === 'Enter' && !game.isRunning) {
                 startGame();
             }
         });
@@ -2614,8 +2831,11 @@
             // Create stars background
             createStars();
             
-            // Start loading sequence
+            // Start loading animation
             simulateLoading();
+            
+            // Initialize visitor counter
+            initVisitorCounter();
             
             // Initialize game state
             init();
