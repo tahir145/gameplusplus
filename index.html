@@ -727,12 +727,16 @@
             </div>
         </div>
         
-        <footer>
-            <p>© 2023 Space Invaders Game. All rights reserved.</p>
+       <footer>
+            <p>Developed by Tahir Mohammed. © <span id="year"></span> Space Invaders Game. All rights reserved.</p>
+
+        <script>
+                  document.getElementById("year").textContent = new Date().getFullYear();
+         </script>
+
             <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
+                <a target="_blank" href="https://web.facebook.com/profile.php?id=61578530544135"><i class="fab fa-facebook"></i></a>
+                <a target="_blank" href="https://github.com/tahir145"><i class="fab fa-github"></i></a>
             </div>
         </footer>
     </div>
