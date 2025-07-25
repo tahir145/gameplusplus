@@ -841,21 +841,10 @@
             display: none !important;
         }
 
-        #skipLoadingBtn {
-            margin-top: 20px;
-            background-color: rgba(78, 204, 163, 0.7);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
 
-        #skipLoadingBtn:hover {
-            background-color: rgba(78, 204, 163, 0.9);
-        }
+
+
+       
 
         @media (max-width: 1024px) {
             .game-container {
@@ -1000,9 +989,7 @@
                 </div>
             </div>
             
-            <button id="skipLoadingBtn" style="display: none;">
-                Skip Loading
-            </button>
+          
         </div>
     </div>
     
@@ -1212,10 +1199,6 @@
             const loadingTime = Math.random() * 1500 + 1500;
             
             setTimeout(() => {
-                document.getElementById('skipLoadingBtn').style.display = 'block';
-            }, 2000);
-            
-            setTimeout(() => {
                 const loadingScreen = document.getElementById('loadingScreen');
                 loadingScreen.style.opacity = '0';
                 
@@ -1275,14 +1258,7 @@
             const powerUpIndicator = document.getElementById('powerUpIndicator');
             const powerUpType = document.getElementById('powerUpType');
             const powerUpTimer = document.getElementById('powerUpTimer');
-            const skipLoadingBtn = document.getElementById('skipLoadingBtn');
-
-            skipLoadingBtn.addEventListener('click', () => {
-                const loadingScreen = document.getElementById('loadingScreen');
-                loadingScreen.style.display = 'none';
-                document.body.classList.add('loading-complete');
-                handlePostLoading();
-            });
+            
 
             canvas.width = 600;
             canvas.height = 400;
