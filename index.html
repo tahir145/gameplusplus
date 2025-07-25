@@ -826,11 +826,6 @@
             font-size: 1.1rem;
         }
 
-        #visitorCount {
-            font-weight: bold;
-            min-width: 20px;
-            text-align: center;
-        }
 
         .visitor-bubble.pulse {
             animation: counterPulse 0.5s ease-in-out;
@@ -1012,14 +1007,16 @@
     </div>
     
     <div id="welcomeScreen">
-        <video class="video-background" autoplay muted loop>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4" type="video/mp4">
+        <video class="video-background" id="myvideo" loop autoplay muted>
+            <source src="space.mp4" type="video/mp4">
         </video>
         <div class="welcome-content">
             <h1 class="welcome-title"><i class="fas fa-rocket"></i> Space Invaders</h1>
             <p class="welcome-subtitle">Welcome to the classic arcade experience reimagined for modern browsers. Defend Earth against waves of alien invaders in this timeless battle for galactic supremacy.</p>
-            <a href="#" class="welcome-btn" id="enterGameBtn">Launch Game</a>
+            <a href="index.html" class="welcome-btn" id="enterGameBtn">Launch Game</a>
         </div>
+   
+
     </div>
         <div id="mobileRestrictionScreen">
         <div class="restriction-icon">
@@ -1033,12 +1030,6 @@
         </div>
     </div>
     
-    <div class="visitor-counter">
-        <div class="visitor-bubble">
-            <i class="fas fa-users"></i>
-            <span id="visitorCount">1</span>
-        </div>
-    </div>
     
     <div id="mainContent">
         <div class="container">
@@ -1106,14 +1097,6 @@
             </div>
             
             <div class="game-info">
-                <div class="high-scores">
-                    <h2><i class="fas fa-trophy"></i> High Scores</h2>
-                    <ol id="highScoresList">
-                        <li>Player 1: 10000</li>
-                        <li>Player 2: 8500</li>
-                        <li>Player 3: 7200</li>
-                    </ol>
-                </div>
                 <div class="game-instructions">
                     <h2><i class="fas fa-info-circle"></i> How to Play</h2>
                     <p>Defend Earth from alien invaders! Move your ship and shoot down the aliens before they reach the bottom of the screen.</p>
@@ -1156,12 +1139,12 @@
         <div class="modal-content">
             <h2><i class="fas fa-skull-crossbones"></i> Game Over</h2>
             <p>Your score: <span id="finalScore">0</span></p>
-            <button id="saveScoreBtn"><i class="fas fa-save"></i> Save Score</button>
             <button id="playAgainBtn"><i class="fas fa-redo"></i> Play Again</button>
         </div>
     </div>
  
     <script>
+        
         document.getElementById("year").textContent = new Date().getFullYear();
         
         function createStars() {
@@ -1190,10 +1173,26 @@
         }
         
         function isMobileDevice() {
-            return (typeof window.orientation !== "undefined") || 
-                   (navigator.userAgent.indexOf('IEMobile') !== -1) ||
-                   (window.matchMedia("(max-width: 768px)").matches);
-        }
+    
+    const userAgent = navigator.userAgent.toLowerCase();
+    const mobileKeywords = [
+        'android', 'webos', 'iphone', 'ipad', 'ipod', 'blackberry', 'windows phone',
+        'opera mini', 'iemobile', 'mobile', 'tablet'
+    ];
+    
+    const isMobile = mobileKeywords.some(keyword => userAgent.includes(keyword));
+  
+    const hasTouchScreen = (
+        ('ontouchstart' in window) || 
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0)
+    );
+    
+    const hasSmallScreen = window.innerWidth < 768;
+
+    return isMobile || (hasTouchScreen && hasSmallScreen);
+}
+
         
         function isFirstVisit() {
             return localStorage.getItem('spaceInvadersVisited') === null;
@@ -1247,64 +1246,7 @@
             mainContent.style.display = 'block';
         }
         
-        function initVisitorCounter() {
-            const visitorCountElement = document.getElementById('visitorCount');
-            const visitorBubble = document.querySelector('.visitor-bubble');
-            
-            const visitorId = 'visitor_' + Math.random().toString(36).substr(2, 9);
-            
-            function updateCounter(count) {
-                if (parseInt(visitorCountElement.textContent) !== count) {
-                    visitorBubble.classList.add('pulse');
-                    setTimeout(() => {
-                        visitorBubble.classList.remove('pulse');
-                    }, 500);
-                }
-                
-                visitorCountElement.textContent = count;
-            }
-            
-            function simulateVisitorTracking() {
-                try {
-                    let visitors = JSON.parse(localStorage.getItem('spaceInvadersVisitors')) || {};
-                    
-                    visitors[visitorId] = Date.now();
-                    
-                    const currentTime = Date.now();
-                    Object.keys(visitors).forEach(id => {
-                        if (currentTime - visitors[id] > 5 * 60 * 1000) {
-                            delete visitors[id];
-                        }
-                    });
-                    
-                    localStorage.setItem('spaceInvadersVisitors', JSON.stringify(visitors));
-                    
-                    updateCounter(Object.keys(visitors).length);
-                } catch (e) {
-                    console.log('Error updating visitor count:', e);
-                }
-            }
-            
-            simulateVisitorTracking();
-            
-            setInterval(simulateVisitorTracking, 30000);
-            
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'visible') {
-                    simulateVisitorTracking();
-                }
-            });
-            
-            window.addEventListener('beforeunload', () => {
-                try {
-                    let visitors = JSON.parse(localStorage.getItem('spaceInvadersVisitors')) || {};
-                    delete visitors[visitorId];
-                    localStorage.setItem('spaceInvadersVisitors', JSON.stringify(visitors));
-                } catch (e) {
-                    console.log('Error removing visitor:', e);
-                }
-            });
-        }
+        
 
         // Only initialize game if not on mobile
         if (!isMobileDevice()) {
@@ -1319,9 +1261,7 @@
             const waveElement = document.getElementById('wave');
             const gameOverModal = document.getElementById('gameOverModal');
             const finalScoreElement = document.getElementById('finalScore');
-            const saveScoreBtn = document.getElementById('saveScoreBtn');
             const playAgainBtn = document.getElementById('playAgainBtn');
-            const highScoresList = document.getElementById('highScoresList');
             const gameWrapper = document.querySelector('.game-wrapper');
             const startScreen = document.getElementById('startScreen');
             const startGameBtn = document.getElementById('startGameBtn');
@@ -2413,43 +2353,10 @@
                     console.log('Could not save high scores to localStorage');
                 }
                 
-                updateHighScoresDisplay();
+                
             }
 
-            function updateHighScoresDisplay() {
-                let highScores = [];
-                try {
-                    highScores = JSON.parse(localStorage.getItem('spaceInvadersHighScores')) || [];
-                } catch (e) {
-                    highScores = [];
-                }
-                
-                highScoresList.innerHTML = '';
-                
-                highScores.forEach((entry, index) => {
-                    const listItem = document.createElement('li');
-                    const difficultyBadge = getDifficultyBadge(entry.difficulty || 'medium');
-                    listItem.innerHTML = `${entry.name}: ${entry.score} ${difficultyBadge} (Wave ${entry.wave || 1})`;
-                    highScoresList.appendChild(listItem);
-                });
-                
-                if (highScores.length < 3) {
-                    const placeholders = [
-                        { name: 'Player 1', score: 10000, wave: 5, difficulty: 'hard' },
-                        { name: 'Player 2', score: 8500, wave: 4, difficulty: 'medium' },
-                        { name: 'Player 3', score: 7200, wave: 3, difficulty: 'easy' }
-                    ];
-                    
-                    for (let i = highScores.length; i < 3; i++) {
-                        const listItem = document.createElement('li');
-                        const difficultyBadge = getDifficultyBadge(placeholders[i].difficulty);
-                        listItem.innerHTML = `${placeholders[i].name}: ${placeholders[i].score} ${difficultyBadge} (Wave ${placeholders[i].wave})`;
-                        listItem.classList.add('placeholder');
-                        highScoresList.appendChild(listItem);
-                    }
-                }
-            }
-
+            
             function getDifficultyBadge(difficulty) {
                 let color = '';
                 switch (difficulty) {
@@ -2631,6 +2538,7 @@
                 e.preventDefault();
                 document.getElementById('welcomeScreen').style.display = 'none';
                 showMainContent();
+                
             });
 
             difficultyBtns.forEach(btn => {
@@ -2676,11 +2584,7 @@
                 }
             });
 
-            saveScoreBtn.addEventListener('click', () => {
-                saveHighScore();
-                gameOverModal.style.display = 'none';
-                startScreen.style.display = 'flex';
-            });
+           
 
             playAgainBtn.addEventListener('click', () => {
                 gameOverModal.style.display = 'none';
@@ -2690,7 +2594,7 @@
             window.addEventListener('resize', resizeCanvas);
 
             init();
-            updateHighScoresDisplay();
+            
             
             document.addEventListener('click', function resumeAudio() {
                 if (audioContext.state === 'suspended') {
@@ -2703,7 +2607,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             createStars();
             simulateLoading();
-            initVisitorCounter();
+            
         });
     </script>
 </body>
