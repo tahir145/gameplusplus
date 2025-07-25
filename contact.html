@@ -26,7 +26,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7640664765387219"
      crossorigin="anonymous"></script>
     <style>
-        /* Base Styles and Reset */
+      
         * {
             margin: 0;
             padding: 0;
@@ -68,7 +68,6 @@
             font-size: 1.1rem;
         }
 
-        /* Header Styles */
         header {
             text-align: center;
             margin-bottom: 40px;
@@ -76,7 +75,6 @@
             border-bottom: 2px solid #4ecca3;
         }
 
-        /* Navigation */
         nav {
             display: flex;
             justify-content: center;
@@ -172,7 +170,6 @@
             transform: translateY(0);
         }
 
-        /* Contact Info */
         .contact-info {
             margin-top: 50px;
             display: grid;
@@ -213,7 +210,6 @@
             color: #4ecca3;
         }
 
-        /* FAQ Section */
         .faq-section {
             margin-top: 50px;
         }
@@ -453,10 +449,7 @@
         <footer>
             <p>Developed by Tahir Mohammed. © <span id="year"></span> Space Invaders Game. All rights reserved.</p>
 
-            <script>
-                document.getElementById("year").textContent = new Date().getFullYear();
-            </script>
-
+      
             <div class="social-links">
                 <a target="_blank" href="https://web.facebook.com/profile.php?id=61578530544135"><i class="fab fa-facebook"></i></a>
                 <a target="_blank" href="https://github.com/tahir145"><i class="fab fa-github"></i></a>
@@ -468,42 +461,34 @@
     </div>
     
     <script>
-              // FAQ Accordion
+        document.getElementById("year").textContent = new Date().getFullYear();
+           
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
                 faqItem.classList.toggle('active');
             });
         });
-        
-        // Form Submission
+     
         const contactForm = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
         
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get form values
+           
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
-            
-            // In a real application, you would send this data to a server
-            // For this example, we'll just simulate a successful submission
-            
-            // Show success message
+      
             successMessage.style.display = 'block';
-            
-            // Reset form
+        
             contactForm.reset();
-            
-            // Hide success message after 5 seconds
+   
             setTimeout(() => {
                 successMessage.style.display = 'none';
             }, 5000);
-            
-            // Log the form data (for demonstration purposes)
+     
             console.log({
                 name,
                 email,

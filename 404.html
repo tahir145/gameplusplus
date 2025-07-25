@@ -11,7 +11,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7640664765387219"
      crossorigin="anonymous"></script>
     <style>
-        /* Base Styles */
+     
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +30,6 @@
             align-items: center;
         }
 
-        /* Stars Background */
         .stars {
             position: fixed;
             top: 0;
@@ -52,7 +51,6 @@
             50% { opacity: 1; }
         }
 
-        /* 404 Content */
         .error-container {
             position: relative;
             z-index: 10;
@@ -111,7 +109,7 @@
             box-shadow: 0 5px 15px rgba(78, 204, 163, 0.4);
         }
 
-        /* Invader Animation */
+      
         .invader-container {
             position: relative;
             height: 100px;
@@ -159,7 +157,6 @@
             100% { height: 0; bottom: 100px; }
         }
 
-        /* Navigation */
         .navigation {
             margin-top: 30px;
         }
@@ -177,7 +174,7 @@
             text-decoration: underline;
         }
 
-        /* Responsive Design */
+       
         @media (max-width: 768px) {
             .error-container {
                 padding: 30px;
@@ -223,10 +220,10 @@
     </style>
 </head>
 <body>
-    <!-- Stars Background -->
+   
     <div class="stars" id="starsContainer"></div>
     
-    <!-- 404 Content -->
+ 
     <div class="error-container">
         <h1 class="error-title">404</h1>
         <h2 class="error-subtitle">Alien Abduction!</h2>
@@ -254,7 +251,7 @@
     </div>
     
     <script>
-        // Create stars background
+     
         function createStars() {
             const starsContainer = document.getElementById('starsContainer');
             const starCount = 150;
@@ -263,14 +260,14 @@
                 const star = document.createElement('div');
                 star.className = 'star';
                 
-                // Random position
+               
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
                 
-                // Random size
+               
                 const size = Math.random() * 3;
                 
-                // Random animation delay
+               
                 const delay = Math.random() * 4;
                 
                 star.style.left = `${x}%`;
@@ -283,7 +280,7 @@
             }
         }
         
-        // Initialize when the page loads
+        
         window.addEventListener('DOMContentLoaded', createStars);
     </script>
 </body>
