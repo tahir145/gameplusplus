@@ -1013,7 +1013,7 @@
         <div class="welcome-content">
             <h1 class="welcome-title"><i class="fas fa-rocket"></i> Space Invaders</h1>
             <p class="welcome-subtitle">Welcome to the classic arcade experience reimagined for modern browsers. Defend Earth against waves of alien invaders in this timeless battle for galactic supremacy.</p>
-            <a href="index.html" class="welcome-btn" id="enterGameBtn">Launch Game</a>
+            <p href="index.html" class="welcome-btn" id="enterGameBtn">Launch Game</p>
         </div>
    
 
@@ -1029,7 +1029,13 @@
             <span>Compatible with desktop browsers</span>
         </div>
     </div>
-    
+    <script>
+        document.getElementById('welcomeScreen').addEventListener('click', () => {
+  const video = document.getElementById('myvideo');
+  video.play();
+});
+
+    </script>
     
     <div id="mainContent">
         <div class="container">
@@ -2538,6 +2544,9 @@
                 e.preventDefault();
                 document.getElementById('welcomeScreen').style.display = 'none';
                 showMainContent();
+                document.getElementById("myvideo").pause();
+                document.getElementById("myvideo").currentTime = 0 ;
+
                 
             });
 
